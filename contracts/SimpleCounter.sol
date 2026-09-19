@@ -2,6 +2,8 @@
 pragma solidity ^0.8.28;
 
 contract SimpleCounter {
+    error InvalidAmount(uint256 amount);
+
     uint256 public count;
 
     function increment() external {
@@ -9,7 +11,10 @@ contract SimpleCounter {
     }
 
     function add(uint256 amount) external {
-        require(amount > 0, "Amount must be greater than zero");
+        if (amount == 0) {
+            revert InvalidAmount(amount);
+        }
+
         count = count + amount;
     }
 

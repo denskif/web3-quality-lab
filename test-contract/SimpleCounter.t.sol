@@ -26,7 +26,12 @@ contract SimpleCounterTest is Test{
     }
 
     function test_RevertWhen_AddZero() public {
-        vm.expectRevert("Amount must be greater than zero");
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                SimpleCounter.InvalidAmount.selector,
+                0
+            )
+        );
         counter.add(0);
         assertEq(counter.count(), 0);
     }
